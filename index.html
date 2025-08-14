@@ -11,47 +11,42 @@
             padding: 0;
             background-color: #f4f4f4;
         }
-
-         /* Estilos del Splash Screen */
+        /* Estilos del Splash Screen */
         #splash-screen {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.7); /* Fondo semi-transparente para oscurecer la página detrás */
-        z-index: 9999;
-        display: flex; /* Usamos flexbox para centrar el contenido */
-        justify-content: center;
-        align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-
         #splash-screen .splash-image-container {
-        width: 80%; /* Ancho deseado de la imagen */
-        max-width: 600px; /* Tamaño máximo para que no sea muy grande en pantallas grandes */
-        height: auto;
-        text-align: center;
-        position: relative; /* Para posicionar el botón de cierre */
+            width: 80%;
+            max-width: 600px;
+            height: auto;
+            text-align: center;
+            position: relative;
         }
-
         #splash-screen img {
-        max-width: 100%;
-        height: auto;
+            max-width: 100%;
+            height: auto;
         }
-
         #splash-screen .close-splash {
-        position: absolute;
-        top: 0; /* Mueve el botón de cierre a la esquina superior del contenedor de la imagen */
-        right: 0;
-        background-color: #e74c3c;
-        color: white;
-        border: none;
-        padding: 10px 15px;
-        cursor: pointer;
-        font-size: 1em;
-        font-weight: bold;         
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
         }
-        
         .header {
             background-color: #333;
             color: white;
@@ -59,7 +54,6 @@
             text-align: center;
             position: relative;
         }
-
         .container {
             width: 80%;
             margin: auto;
@@ -70,7 +64,7 @@
             gap: 20px;
         }
         .exchange-rate-info {
-            grid-column: 1 / -1; /* Ocupa todo el ancho */
+            grid-column: 1 / -1;
             margin-bottom: 20px;
             padding: 15px;
             background-color: #eaf2f8;
@@ -181,8 +175,23 @@
             padding: 0;
         }
         #cart-items li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             padding: 10px 0;
             border-bottom: 1px solid #ddd;
+        }
+        #cart-items li button {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 0.8em;
+            border-radius: 3px;
+        }
+        #cart-items li button:hover {
+            background-color: #c0392b;
         }
         #cart-total {
             margin-top: 20px;
@@ -200,38 +209,59 @@
             margin-top: 15px;
             width: 100%;
             text-align: center;
-            text-decoration: none; /* Para quitar el subrayado del enlace */
-            display: block; /* Para que el enlace se comporte como un bloque */
+            text-decoration: none;
+            display: block;
         }
         #whatsapp-button:hover {
             background-color: #128c7e;
+        }
+        /* Estilos del nuevo mensaje flotante */
+        #notification-message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #333;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+        }
+        #notification-message.show {
+            opacity: 1;
+            visibility: visible;
         }
     </style>
 </head>
 <body>
 
     <div id="splash-screen">
-    <div class="splash-image-container">
-        <img src="https://i.imgur.com/cBE1s62.png" alt="Imagen de Bienvenida">
-        <button class="close-splash" onclick="closeSplashScreen()">X</button>
+        <div class="splash-image-container">
+            <img src="https://i.imgur.com/cBE1s62.png" alt="Imagen de Bienvenida">
+            <button class="close-splash" onclick="closeSplashScreen()">X</button>
+        </div>
     </div>
-    </div>
+
+    <div id="notification-message"></div>
 
     <header class="header">
         <h1>Streaming Ideal.</h1>
         <p>El mejor streaming a tu alcance.</p>
-        <cart-buttons="cart-button" onclick="showCart()">
+        <button class="cart-button" onclick="showCart()">
             🛒 Carrito (<span id="cart-count">0</span>)
         </button>
     </header>
 
     <div class="container">
         <div class="exchange-rate-info">
-            Tasa del dólar BCV hoy: <span id="dollar-rate-display"></span> Bs
+            Tasa del dólar BCV hoy: <span id="dollar-rate-display">Cargando...</span> Bs
         </div>
 
         <div class="product">
-            <img src="https://i.imgur.com/a85YcFc.png" alt="Nombre del Producto 1">
+            <img src="https://i.imgur.com/a85YcFc.png" alt="Netflix">
             <h3>Netflix</h3>
             <p>(Precios x 30 dias)</p>
             <p class="price" data-usd-price="3">$3</p>
@@ -240,7 +270,7 @@
         </div>
 
         <div class="product">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Disney_plus_icon.png" alt="Nombre del Producto 2">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Disney_plus_icon.png" alt="Disney Plus">
             <h3>Disney Plus</h3>
             <p>(Precio x 30 dias)</p>
             <p class="price" data-usd-price="3">$3</p>
@@ -249,7 +279,7 @@
         </div>
 
         <div class="product">
-            <img src="https://childrenofthedigitalage.org/wp-content/uploads/2025/07/HBO-Max-Safety-Settings-2025.png" alt="Nombre del Producto 3">
+            <img src="https://childrenofthedigitalage.org/wp-content/uploads/2025/07/HBO-Max-Safety-Settings-2025.png" alt="Max">
             <h3>Max</h3>
             <p>(Precio x 30 dias)</p>
             <p class="price" data-usd-price="1.5">$1.5</p>
@@ -258,7 +288,7 @@
         </div>
 
         <div class="product">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Amazon_Prime_Video_logo_%282024%29.svg/1024px-Amazon_Prime_Video_logo_%282024%29.svg.png" alt="Nombre del Producto 4">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Amazon_Prime_Video_logo_%282024%29.svg/1024px-Amazon_Prime_Video_logo_%282024%29.svg.png" alt="Prime Video">
             <h3>Prime Video</h3>
             <p>(Precios x 30 dias)</p>
             <p class="price" data-usd-price="2">$2</p>
@@ -267,7 +297,7 @@
         </div>
 
         <div class="product">
-            <img src="https://logodownload.org/wp-content/uploads/2021/03/paramount-plus-logo-0.png" alt="Nombre del Producto 5">
+            <img src="https://logodownload.org/wp-content/uploads/2021/03/paramount-plus-logo-0.png" alt="Paramount Plus">
             <h3>Paramount Plus</h3>
             <p>(Precios x 30 dias)</p>
             <p class="price" data-usd-price="2">$2</p>
@@ -276,7 +306,7 @@
         </div>
 
         <div class="product">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpTOsy_182EgViE_H_VWL1cslDFH-ETQWBqQ&s" alt="Nombre del Producto 6">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpTOsy_182EgViE_H_VWL1cslDFH-ETQWBqQ&s" alt="Flujo TV">
             <h3>Flujo TV</h3>
             <p>(Precio x 30 dias)</p>
             <p class="price" data-usd-price="3">$3</p>
@@ -285,7 +315,7 @@
         </div>
 
         <div class="product">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fc/Crunchyroll_logo_2018_vertical.png" alt="Nombre del Producto 7">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fc/Crunchyroll_logo_2018_vertical.png" alt="Crunchyroll">
             <h3>Crunchyroll</h3>
             <p>(Precio x 30 dias)</p>
             <p class="price" data-usd-price="2">$2</p>
@@ -294,7 +324,7 @@
         </div>
 
         <div class="product">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/2048px-Spotify_logo_without_text.svg.png" alt="Nombre del Producto 8">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/2048px-Spotify_logo_without_text.svg.png" alt="Spotify">
             <h3>Spotify</h3>
             <p>(Precios x 30 dias)</p>
             <p class="price" data-usd-price="4">$4</p>
@@ -303,7 +333,7 @@
         </div>
 
         <div class="product">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png" alt="Nombre del Producto 9">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png" alt="YouTube">
             <h3>YouTube</h3>
             <p>(Precios x 30 dias)</p>
             <p class="price" data-usd-price="4">$4</p>
@@ -312,25 +342,24 @@
         </div>
 
         <div class="product">
-            <img src="https://www.pngmart.com/files/23/Canva-Logo-PNG-File.png" alt="Nombre del Producto 10">
+            <img src="https://www.pngmart.com/files/23/Canva-Logo-PNG-File.png" alt="Canva">
             <h3>Canva</h3>
             <p>(Precio x 30 dias)</p>
             <p class="price" data-usd-price="2">$2</p>
             <p class="price-bs">Bs <span id="price-bs-10">0.00</span></p>
             <button class="add-to-cart-button" onclick="addToCart(10)">Añadir al carrito</button>
         </div>
-
     </div>
 
     <footer class="footer">
-        <p>&copy; 2025 Streaming Ideal.</p> 
+        <p>&copy; 2025 Streaming Ideal.</p>
         <p>Developed by: Samuel Palacios.</p>
         <p>Todos los derechos reservados.</p>
     </footer>
 
     <div id="cart-modal" class="modal">
         <div class="modal-content">
-            <span class="close-button" onclick="closeCart()">&times;</span>
+            <span class="close-button" id="close-cart-modal">&times;</span>
             <h2>Tu Carrito de Compras</h2>
             <ul id="cart-items"></ul>
             <div id="cart-total">
@@ -341,13 +370,12 @@
     </div>
 
     <script>
-        const dollarRate = 134.48; 
-        let cart = []; 
-        const whatsappNumber = '584129386149'; // Reemplaza esto con tu número de teléfono de WhatsApp (sin el +)
-
+        let dollarRate = 0;
+        let cart = [];
+        const whatsappNumber = '584129386149';
         const products = [
             { id: 1, name: 'Netflix', usdPrice: 3 },
-            { id: 2, name: 'Disney', usdPrice: 3 },
+            { id: 2, name: 'Disney Plus', usdPrice: 3 },
             { id: 3, name: 'Max', usdPrice: 1.5 },
             { id: 4, name: 'Prime Video', usdPrice: 2 },
             { id: 5, name: 'Paramount Plus', usdPrice: 2 },
@@ -358,9 +386,35 @@
             { id: 10, name: 'Canva', usdPrice: 2 }
         ];
 
+        document.addEventListener('DOMContentLoaded', () => {
+            loadDollarRate();
+            loadCartFromStorage();
+            document.getElementById('close-cart-modal').addEventListener('click', closeCart);
+            document.getElementById('cart-modal').addEventListener('click', (e) => {
+                if (e.target.id === 'cart-modal') {
+                    closeCart();
+                }
+            });
+        });
+
+        async function loadDollarRate() {
+            const displayElement = document.getElementById('dollar-rate-display');
+            displayElement.innerText = 'Cargando...';
+            try {
+                const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+                const data = await response.json();
+                dollarRate = data.rates.VES;
+                displayElement.innerText = dollarRate.toFixed(2);
+                updatePrices();
+            } catch (error) {
+                console.error('Error al obtener la tasa de cambio:', error);
+                displayElement.innerText = 'Error al cargar. Tasa por defecto: 134.48';
+                dollarRate = 134.48;
+                updatePrices();
+            }
+        }
+
         function updatePrices() {
-            document.getElementById('dollar-rate-display').innerText = dollarRate.toFixed(2);
-            
             products.forEach(product => {
                 const bsPrice = (product.usdPrice * dollarRate).toFixed(2);
                 const bsPriceElement = document.getElementById(`price-bs-${product.id}`);
@@ -368,15 +422,23 @@
                     bsPriceElement.innerText = bsPrice;
                 }
             });
+            updateCartUI();
         }
 
         function addToCart(productId) {
             const product = products.find(p => p.id === productId);
             if (product) {
                 cart.push(product);
+                saveCartToStorage();
                 updateCartUI();
-                alert(`${product.name} ha sido añadido al carrito.`);
+                showNotification(`${product.name} ha sido añadido al carrito.`);
             }
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            saveCartToStorage();
+            updateCartUI();
         }
 
         function updateCartUI() {
@@ -384,9 +446,12 @@
             cartItemsList.innerHTML = '';
             let totalUSD = 0;
 
-            cart.forEach(item => {
+            cart.forEach((item, index) => {
                 const li = document.createElement('li');
-                li.innerText = `${item.name} - $${item.usdPrice.toFixed(2)}`;
+                li.innerHTML = `
+                    <span>${item.name} - $${item.usdPrice.toFixed(2)}</span>
+                    <button onclick="removeFromCart(${index})">Remover</button>
+                `;
                 cartItemsList.appendChild(li);
                 totalUSD += item.usdPrice;
             });
@@ -397,6 +462,18 @@
             document.getElementById('cart-count').innerText = cart.length;
 
             prepareWhatsappLink();
+        }
+
+        function saveCartToStorage() {
+            sessionStorage.setItem('shoppingCart', JSON.stringify(cart));
+        }
+
+        function loadCartFromStorage() {
+            const storedCart = sessionStorage.getItem('shoppingCart');
+            if (storedCart) {
+                cart = JSON.parse(storedCart);
+                updateCartUI();
+            }
         }
 
         function showCart() {
@@ -414,7 +491,7 @@
                 const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
                 whatsappButton.href = url;
             } else {
-                whatsappButton.href = '#'; // Enlace vacío si el carrito está vacío
+                whatsappButton.href = '#';
             }
         }
 
@@ -440,9 +517,15 @@
             document.getElementById('splash-screen').style.display = 'none';
         }
 
-        window.onload = updatePrices;
+        function showNotification(message) {
+            const notification = document.getElementById('notification-message');
+            notification.innerText = message;
+            notification.classList.add('show');
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
     </script>
-
 </body>
-  </html>
-  
+    </html>
+    
