@@ -9,12 +9,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
+        /* Estilos generales */
         body {
             font-family: 'Poppins', Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
         }
+
+        /* Sección de Splash Screen */
         #splash-screen {
             position: fixed;
             top: 0;
@@ -37,7 +40,7 @@
         #splash-screen img {
             max-width: 100%;
             height: auto;
-            border-radius: 20px; /* Bordes redondeados para la imagen */
+            border-radius: 20px;
         }
         .close-splash {
             position: absolute;
@@ -48,9 +51,9 @@
             border: none;
             cursor: pointer;
             font-size: 1.2em;
-            border-radius: 50%; /* Asegura que sea un círculo */
-            width: 40px; /* Define un ancho */
-            height: 40px; /* Define una altura igual al ancho para el círculo */
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -61,6 +64,8 @@
             background-color: rgba(255, 255, 255, 0.4);
             transform: scale(1.1);
         }
+
+        /* Sección de encabezado */
         .header {
             background-image: url('https://i.imgur.com/2B3FIpd.jpeg');
             background-size: cover;
@@ -101,11 +106,15 @@
             color: #888;
             font-size: 1.2em;
         }
-        .container {
+
+        /* Contenedor principal */
+        .main-content {
             width: 80%;
             margin: auto;
             overflow: hidden;
             padding: 20px;
+        }
+        .product-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 20px;
@@ -119,7 +128,10 @@
             text-align: center;
             font-weight: bold;
             border-radius: 8px;
+            animation: floating 3s ease-in-out infinite;
         }
+
+        /* Sección de productos */
         .product {
             background-color: white;
             border: 1px solid #ddd;
@@ -161,6 +173,12 @@
             font-size: 1em;
             color: #555;
         }
+        .product-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-top: 10px;
+        }
         .add-to-cart-button, .view-details-button {
             width: 100%;
             padding: 10px 20px;
@@ -168,7 +186,6 @@
             cursor: pointer;
             border-radius: 5px;
             border: none;
-            margin-top: 5px;
             transition: background-color 0.3s ease;
         }
         .add-to-cart-button {
@@ -178,6 +195,10 @@
         .add-to-cart-button:hover {
             background-color: #229954;
         }
+        .add-to-cart-button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
         .view-details-button {
             background-color: #3498db;
             color: white;
@@ -185,6 +206,8 @@
         .view-details-button:hover {
             background-color: #2980b9;
         }
+
+        /* Sección de pie de página */
         .footer {
             background-image: url('https://i.imgur.com/IFrKQ9U.png');
             background-size: cover;
@@ -196,6 +219,8 @@
             padding: 1em 0;
             margin-top: 20px;
         }
+
+        /* Botones flotantes */
         .fixed-button {
             position: fixed;
             bottom: 20px;
@@ -210,10 +235,12 @@
             align-items: center;
             justify-content: center;
             font-size: 1em;
+            text-decoration: none;
+            color: white;
+            transition: opacity 0.3s ease, visibility 0.3s ease; /* Transición para ocultar/mostrar */
         }
         .cart-button {
             background-color: #3498db;
-            color: white;
             bottom: 20px;
         }
         .cart-button:hover {
@@ -221,7 +248,6 @@
         }
         .social-button {
             background-color: #e74c3c;
-            color: white;
             bottom: 80px;
         }
         .social-button:hover {
@@ -229,15 +255,27 @@
         }
         .payment-button {
             background-color: #9b59b6;
-            color: white;
             bottom: 140px;
         }
         .payment-button:hover {
             background-color: #8e44ad;
         }
+        .movies-button {
+            background-color: #e74c3c;
+            bottom: 200px;
+        }
+        .movies-button:hover {
+            background-color: #c0392b;
+        }
         .fixed-button i {
             margin-right: 8px;
         }
+        .fixed-button.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* Modales */
         .modal {
             display: none;
             position: fixed;
@@ -307,6 +345,8 @@
             text-decoration: none;
             cursor: pointer;
         }
+
+        /* Estilos del carrito */
         #cart-items {
             list-style-type: none;
             padding: 0;
@@ -377,8 +417,10 @@
         #whatsapp-button:hover {
             background-color: #128c7e;
         }
-        #whatsapp-button i {
-            margin-right: 8px;
+        #whatsapp-button.disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+            pointer-events: none;
         }
         #clear-cart-button {
             background-color: #e74c3c;
@@ -393,6 +435,12 @@
         #clear-cart-button:hover {
             background-color: #c0392b;
         }
+        #clear-cart-button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* Notificaciones */
         #notification-message {
             position: fixed;
             top: 20px;
@@ -411,6 +459,8 @@
             opacity: 1;
             visibility: visible;
         }
+
+        /* Métodos de pago */
         .payment-methods-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
@@ -437,6 +487,8 @@
             margin: 0;
             font-size: 0.9em;
         }
+
+        /* Detalles del producto */
         #product-details-modal .modal-content {
             text-align: center;
         }
@@ -454,10 +506,129 @@
             color: #666;
             margin-bottom: 20px;
         }
+
+        /* Catálogo de películas */
+        .movies-catalog-content, .synopsis-content {
+            text-align: center;
+            padding: 20px;
+            background-color: #fefefe;
+            border-radius: 10px;
+        }
+        .carousel-container {
+            position: relative;
+            max-width: 90%;
+            margin: 20px auto;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .carousel-slides {
+            display: flex;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            width: 100%;
+            transition: transform 0.5s ease-in-out;
+        }
+        .carousel-slide {
+            flex: 0 0 100%;
+            scroll-snap-align: start;
+            text-align: center;
+            position: relative;
+            box-sizing: border-box; 
+            padding: 0;
+        }
+        .movie-image-container { 
+            position: relative;
+            width: 100%;
+            padding-top: 150%; 
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .carousel-slide img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 2em;
+            padding: 10px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s;
+            z-index: 1;
+        }
+        .carousel-nav.prev {
+            left: 10px;
+        }
+        .carousel-nav.next {
+            right: 10px;
+        }
+        .carousel-nav:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        .synopsis-button {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #27ae60;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .synopsis-button:hover {
+            background-color: #229954;
+        }
+        .synopsis-content {
+            text-align: center;
+        }
+        .synopsis-content img {
+            max-width: 60%;
+            height: auto;
+            margin-bottom: 10px;
+            border-radius: 8px;
+        }
+
+        /* Animaciones y Media Queries */
+        @media (max-width: 768px) {
+            .carousel-nav {
+                font-size: 1.5em;
+                padding: 5px;
+                width: 40px;
+                height: 40px;
+            }
+        }
+        @keyframes floating {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+        }
     </style>
 </head>
 <body>
-
     <div id="splash-screen">
         <div class="splash-image-container">
             <img src="https://i.imgur.com/cBE1s62.png" alt="Imagen de Bienvenida">
@@ -472,15 +643,18 @@
     <header class="header">
         <h1>ㅤ</h1>
         <p>ㅤ</p>
-        <button class="fixed-button cart-button" onclick="showCart()">
+        <a href="#" class="fixed-button cart-button" id="cart-button" onclick="showCart()">
             <i class="fas fa-shopping-cart"></i> Carrito (<span id="cart-count">0</span>)
-        </button>
-        <button class="fixed-button social-button" onclick="toggleSocialMenu()">
+        </a>
+        <a href="#" class="fixed-button social-button" id="social-button" onclick="toggleSocialMenu()">
             <i class="fas fa-share-alt"></i> Redes
-        </button>
-        <button class="fixed-button payment-button" onclick="togglePaymentMethods()">
+        </a>
+        <a href="#" class="fixed-button payment-button" id="payment-button" onclick="togglePaymentMethods()">
             <i class="fas fa-wallet"></i> Pagos
-        </button>
+        </a>
+        <a href="#" class="fixed-button movies-button" id="movies-button" onclick="showMoviesCatalog()">
+            <i class="fas fa-film"></i> Qué ver
+        </a>
     </header>
 
     <div class="search-bar">
@@ -488,111 +662,133 @@
         <i class="fas fa-search search-icon"></i>
     </div>
 
-    <div class="container" id="product-container">
+    <main class="main-content" id="product-container">
         <div class="exchange-rate-info">
             Tasa dólar BCV hoy: <span id="dollar-rate-display"></span> Bs
         </div>
 
-        <div class="product" data-product-name="Netflix">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Netflix_icon.svg/1024px-Netflix_icon.svg.png" alt="Netflix">
-            <h3>Netflix</h3>
-            <p>(Precios x 30 dias)</p>
-            <p class="price" data-usd-price="4">$4</p>
-            <p class="price-bs">Bs <span id="price-bs-1">0.00</span></p>
-            <button class="add-to-cart-button" onclick="addToCart(1)">Añadir al carrito</button>
-            <button class="view-details-button" onclick="showProductDetails(1)">Ver más</button>
-        </div>
+        <section class="product-container">
+            <div class="product" data-product-name="Netflix">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Netflix_icon.svg/1024px-Netflix_icon.svg.png" alt="Netflix">
+                <h3>Netflix</h3>
+                <p>(Precios x 30 dias)</p>
+                <p class="price" data-usd-price="4">$4</p>
+                <p class="price-bs">Bs <span id="price-bs-1">0.00</span></p>
+                <div class="product-buttons">
+                    <button class="add-to-cart-button" onclick="addToCart(1)">Añadir al carrito</button>
+                    <button class="view-details-button" onclick="showProductDetails(1)">Ver más</button>
+                </div>
+            </div>
 
-        <div class="product" data-product-name="Disney Plus">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Disney_plus_icon.png" alt="Disney Plus">
-            <h3>Disney Plus</h3>
-            <p>(Precio x 30 dias)</p>
-            <p class="price" data-usd-price="2.5">$2.5</p>
-            <p class="price-bs">Bs <span id="price-bs-2">0.00</span></p>
-            <button class="add-to-cart-button" onclick="addToCart(2)">Añadir al carrito</button>
-            <button class="view-details-button" onclick="showProductDetails(2)">Ver más</button>
-        </div>
+            <div class="product" data-product-name="Disney Plus">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Disney_plus_icon.png" alt="Disney Plus">
+                <h3>Disney Plus</h3>
+                <p>(Precio x 30 dias)</p>
+                <p class="price" data-usd-price="2.5">$2.5</p>
+                <p class="price-bs">Bs <span id="price-bs-2">0.00</span></p>
+                <div class="product-buttons">
+                    <button class="add-to-cart-button" onclick="addToCart(2)">Añadir al carrito</button>
+                    <button class="view-details-button" onclick="showProductDetails(2)">Ver más</button>
+                </div>
+            </div>
 
-        <div class="product" data-product-name="Max">
-            <img src="https://childrenofthedigitalage.org/wp-content/uploads/2025/07/HBO-Max-Safety-Settings-2025.png" alt="Max">
-            <h3>Max</h3>
-            <p>(Precio x 30 dias)</p>
-            <p class="price" data-usd-price="1.5">$1.5</p>
-            <p class="price-bs">Bs <span id="price-bs-3">0.00</span></p>
-            <button class="add-to-cart-button" onclick="addToCart(3)">Añadir al carrito</button>
-            <button class="view-details-button" onclick="showProductDetails(3)">Ver más</button>
-        </div>
+            <div class="product" data-product-name="Max">
+                <img src="https://childrenofthedigitalage.org/wp-content/uploads/2025/07/HBO-Max-Safety-Settings-2025.png" alt="Max">
+                <h3>Max</h3>
+                <p>(Precio x 30 dias)</p>
+                <p class="price" data-usd-price="1.5">$1.5</p>
+                <p class="price-bs">Bs <span id="price-bs-3">0.00</span></p>
+                <div class="product-buttons">
+                    <button class="add-to-cart-button" onclick="addToCart(3)">Añadir al carrito</button>
+                    <button class="view-details-button" onclick="showProductDetails(3)">Ver más</button>
+                </div>
+            </div>
 
-        <div class="product" data-product-name="Prime Video">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Amazon_Prime_Video_logo_%282024%29.svg/1024px-Amazon_Prime_Video_logo_%282024%29.svg.png" alt="Prime Video">
-            <h3>Prime Video</h3>
-            <p>(Precios x 30 dias)</p>
-            <p class="price" data-usd-price="2">$2</p>
-            <p class="price-bs">Bs <span id="price-bs-4">0.00</span></p>
-            <button class="add-to-cart-button" onclick="addToCart(4)">Añadir al carrito</button>
-            <button class="view-details-button" onclick="showProductDetails(4)">Ver más</button>
-        </div>
+            <div class="product" data-product-name="Prime Video">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Amazon_Prime_Video_logo_%282024%29.svg/1024px-Amazon_Prime_Video_logo_%282024%29.svg.png" alt="Prime Video">
+                <h3>Prime Video</h3>
+                <p>(Precios x 30 dias)</p>
+                <p class="price" data-usd-price="2">$2</p>
+                <p class="price-bs">Bs <span id="price-bs-4">0.00</span></p>
+                <div class="product-buttons">
+                    <button class="add-to-cart-button" onclick="addToCart(4)">Añadir al carrito</button>
+                    <button class="view-details-button" onclick="showProductDetails(4)">Ver más</button>
+                </div>
+            </div>
 
-        <div class="product" data-product-name="Paramount Plus">
-            <img src="https://logodownload.org/wp-content/uploads/2021/03/paramount-plus-logo-0.png" alt="Paramount Plus">
-            <h3>Paramount Plus</h3>
-            <p>(Precios x 30 dias)</p>
-            <p class="price" data-usd-price="2">$2</p>
-            <p class="price-bs">Bs <span id="price-bs-5">0.00</span></p>
-            <button class="add-to-cart-button" onclick="addToCart(5)">Añadir al carrito</button>
-            <button class="view-details-button" onclick="showProductDetails(5)">Ver más</button>
-        </div>
+            <div class="product" data-product-name="Paramount Plus">
+                <img src="https://logodownload.org/wp-content/uploads/2021/03/paramount-plus-logo-0.png" alt="Paramount Plus">
+                <h3>Paramount Plus</h3>
+                <p>(Precios x 30 dias)</p>
+                <p class="price" data-usd-price="2">$2</p>
+                <p class="price-bs">Bs <span id="price-bs-5">0.00</span></p>
+                <div class="product-buttons">
+                    <button class="add-to-cart-button" onclick="addToCart(5)">Añadir al carrito</button>
+                    <button class="view-details-button" onclick="showProductDetails(5)">Ver más</button>
+                </div>
+            </div>
 
-        <div class="product" data-product-name="Flujo TV">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpTOsy_182EgViE_H_VWL1cslDFH-ETQWBqQ&s" alt="Flujo TV">
-            <h3>Flujo TV</h3>
-            <p>(Precio x 30 dias)</p>
-            <p class="price" data-usd-price="0">SIN STOCK</p>
-            <p class="price-bs">Bs <span id="price-bs-6">0.00</span></p>
-            <button class="add-to-cart-button" onclick="addToCart(6)">Añadir al carrito</button>
-            <button class="view-details-button" onclick="showProductDetails(6)">Ver más</button>
-        </div>
+            <div class="product out-of-stock" data-product-name="Flujo TV">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpTOsy_182EgViE_H_VWL1cslDFH-ETQWBqQ&s" alt="Flujo TV">
+                <h3>Flujo TV</h3>
+                <p>(Precio x 30 dias)</p>
+                <p class="price" data-usd-price="0">SIN STOCK</p>
+                <p class="price-bs">Bs <span id="price-bs-6">0.00</span></p>
+                <div class="product-buttons">
+                    <button class="add-to-cart-button" onclick="addToCart(6)" disabled>Añadir al carrito</button>
+                    <button class="view-details-button" onclick="showProductDetails(6)">Ver más</button>
+                </div>
+            </div>
 
-        <div class="product" data-product-name="Crunchyroll">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fc/Crunchyroll_logo_2018_vertical.png" alt="Crunchyroll">
-            <h3>Crunchyroll</h3>
-            <p>(Precio x 30 dias)</p>
-            <p class="price" data-usd-price="2">$2</p>
-            <p class="price-bs">Bs <span id="price-bs-7">0.00</span></p>
-            <button class="add-to-cart-button" onclick="addToCart(7)">Añadir al carrito</button>
-            <button class="view-details-button" onclick="showProductDetails(7)">Ver más</button>
-        </div>
+            <div class="product" data-product-name="Crunchyroll">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/f/fc/Crunchyroll_logo_2018_vertical.png" alt="Crunchyroll">
+                <h3>Crunchyroll</h3>
+                <p>(Precio x 30 dias)</p>
+                <p class="price" data-usd-price="2">$2</p>
+                <p class="price-bs">Bs <span id="price-bs-7">0.00</span></p>
+                <div class="product-buttons">
+                    <button class="add-to-cart-button" onclick="addToCart(7)">Añadir al carrito</button>
+                    <button class="view-details-button" onclick="showProductDetails(7)">Ver más</button>
+                </div>
+            </div>
 
-        <div class="product" data-product-name="Vix">
-            <img src="https://i.pinimg.com/736x/9e/9a/e9/9e9ae9ca207ea166c3d5c4f1ad9ffe1f.jpg" alt="Vix">
-            <h3>Vix</h3>
-            <p>(Precios x 30 dias)</p>
-            <p class="price" data-usd-price="2">$2</p>
-            <p class="price-bs">Bs <span id="price-bs-8">0.00</span></p>
-            <button class="add-to-cart-button" onclick="addToCart(8)">Añadir al carrito</button>
-            <button class="view-details-button" onclick="showProductDetails(8)">Ver más</button>
-        </div>
+            <div class="product" data-product-name="Vix">
+                <img src="https://i.pinimg.com/736x/9e/9a/e9/9e9ae9ca207ea166c3d5c4f1ad9ffe1f.jpg" alt="Vix">
+                <h3>Vix</h3>
+                <p>(Precios x 30 dias)</p>
+                <p class="price" data-usd-price="2">$2</p>
+                <p class="price-bs">Bs <span id="price-bs-8">0.00</span></p>
+                <div class="product-buttons">
+                    <button class="add-to-cart-button" onclick="addToCart(8)">Añadir al carrito</button>
+                    <button class="view-details-button" onclick="showProductDetails(8)">Ver más</button>
+                </div>
+            </div>
 
-        <div class="product" data-product-name="Spotify">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/2048px-Spotify_logo_without_text.svg.png" alt="Spotify">
-            <h3>Spotify</h3>
-            <p>(Precios x 30 dias)</p>
-            <p class="price" data-usd-price="4">$4</p>
-            <p class="price-bs">Bs <span id="price-bs-9">0.00</span></p>
-            <button class="add-to-cart-button" onclick="addToCart(9)">Añadir al carrito</button>
-            <button class="view-details-button" onclick="showProductDetails(9)">Ver más</button>
-        </div>
+            <div class="product" data-product-name="Spotify">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/2048px-Spotify_logo_without_text.svg.png" alt="Spotify">
+                <h3>Spotify</h3>
+                <p>(Precios x 30 dias)</p>
+                <p class="price" data-usd-price="4">$4</p>
+                <p class="price-bs">Bs <span id="price-bs-9">0.00</span></p>
+                <div class="product-buttons">
+                    <button class="add-to-cart-button" onclick="addToCart(9)">Añadir al carrito</button>
+                    <button class="view-details-button" onclick="showProductDetails(9)">Ver más</button>
+                </div>
+            </div>
 
-        <div class="product" data-product-name="Canva">
-            <img src="https://www.pngmart.com/files/23/Canva-Logo-PNG-File.png" alt="Canva">
-            <h3>Canva</h3>
-            <p>(Precio x 30 dias)</p>
-            <p class="price" data-usd-price="0">SIN STOCK</p>
-            <p class="price-bs">Bs <span id="price-bs-10">0.00</span></p>
-            <button class="add-to-cart-button" onclick="addToCart(10)">Añadir al carrito</button>
-            <button class="view-details-button" onclick="showProductDetails(10)">Ver más</button>
-        </div>
-    </div>
+            <div class="product out-of-stock" data-product-name="Canva">
+                <img src="https://www.pngmart.com/files/23/Canva-Logo-PNG-File.png" alt="Canva">
+                <h3>Canva</h3>
+                <p>(Precio x 30 dias)</p>
+                <p class="price" data-usd-price="0">SIN STOCK</p>
+                <p class="price-bs">Bs <span id="price-bs-10">0.00</span></p>
+                <div class="product-buttons">
+                    <button class="add-to-cart-button" onclick="addToCart(10)" disabled>Añadir al carrito</button>
+                    <button class="view-details-button" onclick="showProductDetails(10)">Ver más</button>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <footer class="footer">
         <p>&copy; 2025 Streaming Ideal.</p>
@@ -609,8 +805,8 @@
                 Total: $ <span id="cart-total-usd">0.00</span> (Bs <span id="cart-total-bs">0.00</span>)
             </div>
             <div class="cart-buttons">
-                <button id="clear-cart-button" onclick="clearCart()">Vaciar Carrito</button>
-                <a id="whatsapp-button" href="#" target="_blank">
+                <button id="clear-cart-button" onclick="clearCart()" disabled>Vaciar Carrito</button>
+                <a id="whatsapp-button" href="#" target="_blank" class="disabled">
                     <i class="fab fa-whatsapp"></i> Completar pago
                 </a>
             </div>
@@ -672,30 +868,388 @@
         </div>
     </div>
 
+    <div id="movies-catalog-modal" class="modal">
+        <div class="modal-content movies-catalog-content">
+            <span class="close-button" onclick="closeMoviesCatalog()">&times;</span>
+            <h2>Qué ver:</h2>
+            <div class="carousel-container">
+                <button class="carousel-nav prev" onclick="changeSlide(-1)">&#10094;</button>
+                <div class="carousel-slides" id="carousel-slides">
+                </div>
+                <button class="carousel-nav next" onclick="changeSlide(1)">&#10095;</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="synopsis-modal" class="modal">
+        <div class="modal-content synopsis-content">
+            <span class="close-button" onclick="closeSynopsis()">&times;</span>
+            <div id="synopsis-content-wrapper">
+                <h3 id="synopsis-title"></h3>
+                <p id="synopsis-text"></p>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
     <script>
-        let dollarRate = 135.64;
-
-        document.getElementById('dollar-rate-display').innerText = dollarRate.toFixed(2);
-        
-        let cart = [];
-        const whatsappNumber = '584129386149';
-        const products = [
-            { id: 1, name: 'Netflix', usdPrice: 4, imgUrl: 'https://i.imgur.com/a85YcFc.png', description: 'Disfruta de un catálogo inmenso de series, películas y documentales, con contenido original premiado.' },
-            { id: 2, name: 'Disney Plus', usdPrice: 2.5, imgUrl: 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Disney_plus_icon.png', description: 'Acceso ilimitado a las historias de Disney, Pixar, Marvel, Star Wars y National Geographic.' },
-            { id: 3, name: 'Max', usdPrice: 1.5, imgUrl: 'https://childrenofthedigitalage.org/wp-content/uploads/2025/07/HBO-Max-Safety-Settings-2025.png', description: 'El mejor entretenimiento de HBO, Warner Bros. y el Universo DC, todo en un solo lugar.' },
-            { id: 4, name: 'Prime Video', usdPrice: 2, imgUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Amazon_Prime_Video_logo_%282024%29.svg/1024px-Amazon_Prime_Video_logo_%282024%29.svg.png', description: 'Series y películas originales de Amazon, además de una gran selección de contenido popular.' },
-            { id: 5, name: 'Paramount Plus', usdPrice: 2, imgUrl: 'https://logodownload.org/wp-content/uploads/2021/03/paramount-plus-logo-0.png', description: 'Miles de episodios, películas exclusivas y deportes en vivo de tus marcas favoritas, como CBS y Comedy Central.' },
-            { id: 6, name: 'Flujo TV', usdPrice: 0, imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpTOsy_182EgViE_H_VWL1cslDFH-ETQWBqQ&s', description: 'Disfruta de televisión en vivo y un amplio catálogo de películas y series. (Actualmente sin stock)' },
-            { id: 7, name: 'Crunchyroll', usdPrice: 2, imgUrl: 'https://upload.wikimedia.org/wikipedia/commons/f/fc/Crunchyroll_logo_2018_vertical.png', description: 'El hogar del anime. Mira los últimos episodios de tus series favoritas poco después de su estreno en Japón.' },
-            { id: 8, name: 'Vix', usdPrice: 2, imgUrl: 'https://i.pinimg.com/736x/9e/9a/e9/9e9ae9ca207ea166c3d5c4f1ad9ffe1f.jpg', description: 'Una gran variedad de contenido en español, incluyendo series originales, películas y noticias.' },
-            { id: 9, name: 'Spotify', usdPrice: 4, imgUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/2048px-Spotify_logo_without_text.svg.png', description: 'Accede a millones de canciones y podcasts sin anuncios y con la mejor calidad de audio.' },
-            { id: 10, name: 'Canva', usdPrice: 0, imgUrl: 'https://www.pngmart.com/files/23/Canva-Logo-PNG-File.png', description: 'La herramienta de diseño gráfico en línea más popular. Crea presentaciones, logos, pósteres y más de manera sencilla. (Actualmente sin stock)' }
-        ];
-
         document.addEventListener('DOMContentLoaded', () => {
+            const dollarRate = 135.64;
+            document.getElementById('dollar-rate-display').innerText = dollarRate.toFixed(2);
+            
+            let cart = [];
+            const whatsappNumber = '584129386149';
+            const products = [
+                { id: 1, name: 'Netflix', usdPrice: 4, imgUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Netflix_icon.svg/1024px-Netflix_icon.svg.png', description: 'Disfruta de un catálogo inmenso de series, películas y documentales, con contenido original premiado.' },
+                { id: 2, name: 'Disney Plus', usdPrice: 2.5, imgUrl: 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Disney_plus_icon.png', description: 'Acceso ilimitado a las historias de Disney, Pixar, Marvel, Star Wars y National Geographic.' },
+                { id: 3, name: 'Max', usdPrice: 1.5, imgUrl: 'https://childrenofthedigitalage.org/wp-content/uploads/2025/07/HBO-Max-Safety-Settings-2025.png', description: 'El mejor entretenimiento de HBO, Warner Bros. y el Universo DC, todo en un solo lugar.' },
+                { id: 4, name: 'Prime Video', usdPrice: 2, imgUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Amazon_Prime_Video_logo_%282024%29.svg/1024px-Amazon_Prime_Video_logo_%282024%29.svg.png', description: 'Series y películas originales de Amazon, además de una gran selección de contenido popular.' },
+                { id: 5, name: 'Paramount Plus', usdPrice: 2, imgUrl: 'https://logodownload.org/wp-content/uploads/2021/03/paramount-plus-logo-0.png', description: 'Miles de episodios, películas exclusivas y deportes en vivo de tus marcas favoritas, como CBS y Comedy Central.' },
+                { id: 6, name: 'Flujo TV', usdPrice: 0, imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpTOsy_182EgViE_H_VWL1cslDFH-ETQWBqQ&s', description: 'Disfruta de televisión en vivo y un amplio catálogo de películas y series. (Actualmente sin stock)' },
+                { id: 7, name: 'Crunchyroll', usdPrice: 2, imgUrl: 'https://upload.wikimedia.org/wikipedia/commons/f/fc/Crunchyroll_logo_2018_vertical.png', description: 'El hogar del anime. Mira los últimos episodios de tus series favoritas poco después de su estreno en Japón.' },
+                { id: 8, name: 'Vix', usdPrice: 2, imgUrl: 'https://i.pinimg.com/736x/9e/9a/e9/9e9ae9ca207ea166c3d5c4f1ad9ffe1f.jpg', description: 'Una gran variedad de contenido en español, incluyendo series originales, películas y noticias.' },
+                { id: 9, name: 'Spotify', usdPrice: 4, imgUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/2048px-Spotify_logo_without_text.svg.png', description: 'Accede a millones de canciones y podcasts sin anuncios y con la mejor calidad de audio.' },
+                { id: 10, name: 'Canva', usdPrice: 0, imgUrl: 'https://www.pngmart.com/files/23/Canva-Logo-PNG-File.png', description: 'La herramienta de diseño gráfico en línea más popular. Crea presentaciones, logos, pósteres y más de manera sencilla. (Actualmente sin stock)' }
+            ];
+
+            const movies = [
+                { id: 987686, title: 'Asunto familiar', imageUrl: 'https://pics.filmaffinity.com/a_family_affair-639912317-large.jpg' },
+                { id: 229221, title: 'Mi querida niña', imageUrl: 'https://image.tmdb.org/t/p/original/dmyJoPy8iiwDKy683EjRTSiARlg.jpg' },
+                { id: 426063, title: 'Nosferatu', imageUrl: 'https://m.media-amazon.com/images/M/MV5BY2FhZGE3NmEtNWJjOC00NDI1LWFhMTQtMjcxNmQzZmEwNGIzXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg' },
+                { id: 1104845, title: 'Plankton: La pelicula', imageUrl: 'https://static.wikia.nocookie.net/doblaje/images/5/5b/PlanktonTheMovie.jpg/revision/latest/scale-to-width-down/1200?cb=20250310011019&path-prefix=es' },
+                { id: 259909, title: 'Dexter: Resurrecion', imageUrl: 'https://mx.web.img2.acsta.net/img/57/32/5732710262114079561f9a68c9c48f12.jpg' }
+            ];
+            
+            let currentSlide = 0;
+            const tmdbApiKey = '65aa5b7946592f4674d9d2115569d584';
+
+            // Función para ocultar o mostrar los botones flotantes
+            const toggleFixedButtons = (show) => {
+                const buttons = document.querySelectorAll('.fixed-button');
+                buttons.forEach(button => {
+                    if (show) {
+                        button.classList.remove('hidden');
+                    } else {
+                        button.classList.add('hidden');
+                    }
+                });
+            };
+
+            const updatePrices = () => {
+                products.forEach(product => {
+                    const bsPrice = (product.usdPrice * dollarRate).toFixed(2);
+                    const bsPriceElement = document.getElementById(`price-bs-${product.id}`);
+                    if (bsPriceElement) {
+                        bsPriceElement.innerText = bsPrice;
+                    }
+                });
+                updateCartUI();
+            };
+
+            const filterProducts = () => {
+                const searchTerm = document.getElementById('search-input').value.toLowerCase();
+                const productElements = document.querySelectorAll('.product');
+                const exchangeRateInfo = document.querySelector('.exchange-rate-info');
+
+                productElements.forEach(productEl => {
+                    const productName = productEl.getAttribute('data-product-name').toLowerCase();
+                    if (productName.includes(searchTerm)) {
+                        productEl.style.display = 'flex';
+                    } else {
+                        productEl.style.display = 'none';
+                    }
+                });
+                if (searchTerm.length > 0) {
+                    exchangeRateInfo.style.display = 'none';
+                } else {
+                    exchangeRateInfo.style.display = 'block';
+                }
+            };
+            
+            const addToCart = (productId) => {
+                const product = products.find(p => p.id === productId);
+                if (product && product.usdPrice > 0) {
+                    const existingItem = cart.find(item => item.id === productId);
+                    if (existingItem) {
+                        existingItem.quantity++;
+                    } else {
+                        cart.push({ ...product, quantity: 1 });
+                    }
+                    saveCartToStorage();
+                    updateCartUI();
+                    showNotification(`${product.name} ha sido añadido al carrito.`);
+                    launchConfetti();
+                } else if (product && product.usdPrice === 0) {
+                    showNotification(`${product.name} no está disponible actualmente.`);
+                }
+            };
+
+            const updateCartItemQuantity = (productId, change) => {
+                const item = cart.find(p => p.id === productId);
+                if (item) {
+                    item.quantity += change;
+                    if (item.quantity <= 0) {
+                        cart = cart.filter(p => p.id !== productId);
+                    }
+                    saveCartToStorage();
+                    updateCartUI();
+                }
+            };
+
+            const clearCart = () => {
+                cart = [];
+                saveCartToStorage();
+                updateCartUI();
+                showNotification('El carrito ha sido vaciado.');
+            };
+
+            const updateCartUI = () => {
+                const cartItemsList = document.getElementById('cart-items');
+                const whatsappButton = document.getElementById('whatsapp-button');
+                const clearCartButton = document.getElementById('clear-cart-button');
+                cartItemsList.innerHTML = '';
+                let totalUSD = 0;
+                let totalItems = 0;
+
+                if (cart.length === 0) {
+                    cartItemsList.innerHTML = '<li>El carrito está vacío.</li>';
+                    whatsappButton.classList.add('disabled');
+                    clearCartButton.disabled = true;
+                } else {
+                    whatsappButton.classList.remove('disabled');
+                    clearCartButton.disabled = false;
+                    cart.forEach(item => {
+                        const li = document.createElement('li');
+                        const subtotalUSD = item.usdPrice * item.quantity;
+                        const subtotalBS = (subtotalUSD * dollarRate).toFixed(2);
+                        
+                        li.innerHTML = `
+                            <div class="cart-item-info">
+                                <span>${item.name} (${item.quantity})</span>
+                                <span class="item-price">$${subtotalUSD.toFixed(2)} (Bs ${subtotalBS})</span>
+                            </div>
+                            <div class="quantity-control">
+                                <button onclick="updateCartItemQuantity(${item.id}, -1)">-</button>
+                                <span>${item.quantity}</span>
+                                <button onclick="updateCartItemQuantity(${item.id}, 1)">+</button>
+                            </div>
+                        `;
+                        cartItemsList.appendChild(li);
+                        totalUSD += subtotalUSD;
+                        totalItems += item.quantity;
+                    });
+                }
+
+                const totalBS = (totalUSD * dollarRate).toFixed(2);
+                document.getElementById('cart-total-usd').innerText = totalUSD.toFixed(2);
+                document.getElementById('cart-total-bs').innerText = totalBS;
+                document.getElementById('cart-count').innerText = totalItems;
+
+                prepareWhatsappLink();
+            };
+
+            const saveCartToStorage = () => {
+                sessionStorage.setItem('shoppingCart', JSON.stringify(cart));
+            };
+
+            const loadCartFromStorage = () => {
+                const storedCart = sessionStorage.getItem('shoppingCart');
+                if (storedCart) {
+                    cart = JSON.parse(storedCart);
+                    updateCartUI();
+                }
+            };
+
+            const showCart = () => {
+                document.getElementById('cart-modal').style.display = 'block';
+            };
+
+            const closeCart = () => {
+                document.getElementById('cart-modal').style.display = 'none';
+            };
+
+            const prepareWhatsappLink = () => {
+                const whatsappButton = document.getElementById('whatsapp-button');
+                if (cart.length > 0) {
+                    const message = generateWhatsappMessage();
+                    const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+                    whatsappButton.href = url;
+                } else {
+                    whatsappButton.href = '#';
+                }
+            };
+
+            const generateWhatsappMessage = () => {
+                let message = '¡Hola! Me gustaría hacer un pedido.\n\n';
+                let totalUSD = 0;
+                message += 'Productos:\n';
+                cart.forEach(item => {
+                    const subtotalUSD = item.usdPrice * item.quantity;
+                    const subtotalBS = (subtotalUSD * dollarRate).toFixed(2);
+                    message += `- ${item.name} (${item.quantity}) - $${subtotalUSD.toFixed(2)} / Bs ${subtotalBS}\n`;
+                    totalUSD += subtotalUSD;
+                });
+                const totalBS = (totalUSD * dollarRate).toFixed(2);
+                message += `\nTotal: $${totalUSD.toFixed(2)} (Bs ${totalBS})`;
+                message += `\n\nPor favor, indícame los pasos para completar la compra.`;
+                return message;
+            };
+
+            const closeSplashScreen = () => {
+                document.getElementById('splash-screen').style.display = 'none';
+            };
+
+            const showNotification = (message) => {
+                const notification = document.getElementById('notification-message');
+                notification.innerText = message;
+                notification.classList.add('show');
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
+            };
+
+            const toggleSocialMenu = () => {
+                const socialMenu = document.getElementById('social-menu');
+                socialMenu.style.display = socialMenu.style.display === 'block' ? 'none' : 'block';
+            };
+
+            const closeSocialMenu = () => {
+                document.getElementById('social-menu').style.display = 'none';
+            };
+
+            const togglePaymentMethods = () => {
+                const paymentModal = document.getElementById('payment-methods-modal');
+                paymentModal.style.display = paymentModal.style.display === 'block' ? 'none' : 'block';
+            };
+
+            const closePaymentMethods = () => {
+                document.getElementById('payment-methods-modal').style.display = 'none';
+            };
+
+            const launchConfetti = () => {
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
+            };
+            
+            // Función para mostrar los detalles del producto y ocultar los botones flotantes
+            const showProductDetails = (productId) => {
+                const product = products.find(p => p.id === productId);
+                if (!product) return;
+                const modal = document.getElementById('product-details-modal');
+                document.getElementById('details-product-name').innerText = product.name;
+                document.getElementById('details-product-image').src = product.imgUrl;
+                document.getElementById('details-product-description').innerText = product.description;
+                document.getElementById('details-product-price-usd').innerText = product.usdPrice.toFixed(2);
+                document.getElementById('details-product-price-bs').innerText = (product.usdPrice * dollarRate).toFixed(2);
+                modal.style.display = 'block';
+                toggleFixedButtons(false); // Oculta los botones flotantes
+            };
+
+            // Función para cerrar los detalles del producto y mostrar los botones flotantes
+            const closeProductDetails = () => {
+                document.getElementById('product-details-modal').style.display = 'none';
+                toggleFixedButtons(true); // Muestra los botones flotantes
+            };
+
+            const showMoviesCatalog = () => {
+                toggleFixedButtons(false); // Oculta los botones
+                document.getElementById('movies-catalog-modal').style.display = 'block';
+                renderMovieSlides();
+            };
+
+            const closeMoviesCatalog = () => {
+                toggleFixedButtons(true); // Muestra los botones
+                document.getElementById('movies-catalog-modal').style.display = 'none';
+                currentSlide = 0;
+                document.getElementById('carousel-slides').style.transform = `translateX(0%)`;
+            };
+
+            const renderMovieSlides = () => {
+                const carouselContainer = document.getElementById('carousel-slides');
+                carouselContainer.innerHTML = '';
+                movies.forEach(movie => {
+                    const slide = document.createElement('div');
+                    slide.classList.add('carousel-slide');
+                    slide.innerHTML = `
+                        <div class="movie-image-container">
+                            <img src="${movie.imageUrl}" alt="${movie.title}">
+                        </div>
+                        <button class="synopsis-button" onclick="showSynopsis(${movie.id}, '${movie.title}')">Sinopsis</button>
+                    `;
+                    carouselContainer.appendChild(slide);
+                });
+            };
+
+            const changeSlide = (direction) => {
+                const slides = document.querySelectorAll('.carousel-slide');
+                currentSlide = (currentSlide + direction + slides.length) % slides.length;
+                document.getElementById('carousel-slides').style.transform = `translateX(-${currentSlide * 100}%)`;
+            };
+
+            const showSynopsis = async (movieId, movieTitle) => {
+                const synopsisModal = document.getElementById('synopsis-modal');
+                const synopsisTitle = document.getElementById('synopsis-title');
+                const synopsisText = document.getElementById('synopsis-text');
+
+                synopsisTitle.innerText = `Cargando...`;
+                synopsisText.innerText = '';
+                synopsisModal.style.display = 'block';
+
+                const movieData = await getMovieSynopsis(movieId);
+                if (movieData) {
+                    synopsisTitle.innerText = movieTitle;
+                    synopsisText.innerText = movieData.overview;
+                } else {
+                    synopsisTitle.innerText = 'Error';
+                    synopsisText.innerText = 'No se pudo cargar la sinopsis. Intente de nuevo más tarde.';
+                }
+            };
+
+            const getMovieSynopsis = async (movieId) => {
+                const url = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${tmdbApiKey}&language=es-MX`;
+                try {
+                    const response = await fetch(url);
+                    if (!response.ok) {
+                        throw new Error(`Error HTTP: ${response.status}`);
+                    }
+                    const data = await response.json();
+                    return data;
+                } catch (error) {
+                    console.error("Error al obtener la sinopsis:", error);
+                    return null;
+                }
+            };
+
+            const closeSynopsis = () => {
+                document.getElementById('synopsis-modal').style.display = 'none';
+            };
+
+            // Exponer funciones al ámbito global para los eventos onclick en HTML
+            window.closeSplashScreen = closeSplashScreen;
+            window.showCart = showCart;
+            window.closeCart = closeCart;
+            window.toggleSocialMenu = toggleSocialMenu;
+            window.closeSocialMenu = closeSocialMenu;
+            window.togglePaymentMethods = togglePaymentMethods;
+            window.closePaymentMethods = closePaymentMethods;
+            window.addToCart = addToCart;
+            window.updateCartItemQuantity = updateCartItemQuantity;
+            window.clearCart = clearCart;
+            window.filterProducts = filterProducts;
+            window.showProductDetails = showProductDetails;
+            window.closeProductDetails = closeProductDetails;
+            window.showMoviesCatalog = showMoviesCatalog;
+            window.closeMoviesCatalog = closeMoviesCatalog;
+            window.changeSlide = changeSlide;
+            window.showSynopsis = showSynopsis;
+            window.closeSynopsis = closeSynopsis;
+
+            updatePrices();
             loadCartFromStorage();
-            updatePrices(); 
+
             document.getElementById('close-cart-modal').addEventListener('click', closeCart);
             document.getElementById('cart-modal').addEventListener('click', (e) => {
                 if (e.target.id === 'cart-modal') {
@@ -717,222 +1271,17 @@
                     closeProductDetails();
                 }
             });
+            document.getElementById('movies-catalog-modal').addEventListener('click', (e) => {
+                if (e.target.id === 'movies-catalog-modal') {
+                    closeMoviesCatalog();
+                }
+            });
+            document.getElementById('synopsis-modal').addEventListener('click', (e) => {
+                if (e.target.id === 'synopsis-modal') {
+                    closeSynopsis();
+                }
+            });
         });
-
-        function updatePrices() {
-            products.forEach(product => {
-                const bsPrice = (product.usdPrice * dollarRate).toFixed(2);
-                const bsPriceElement = document.getElementById(`price-bs-${product.id}`);
-                if (bsPriceElement) {
-                    bsPriceElement.innerText = bsPrice;
-                }
-            });
-            updateCartUI();
-        }
-
-        function filterProducts() {
-            const searchTerm = document.getElementById('search-input').value.toLowerCase();
-            const productElements = document.querySelectorAll('.product');
-            const exchangeRateInfo = document.querySelector('.exchange-rate-info');
-
-            productElements.forEach(productEl => {
-                const productName = productEl.getAttribute('data-product-name').toLowerCase();
-                if (productName.includes(searchTerm)) {
-                    productEl.style.display = 'flex';
-                    exchangeRateInfo.style.display = 'block';
-                } else {
-                    productEl.style.display = 'none';
-                    exchangeRateInfo.style.display = 'none';
-                }
-            });
-        }
-
-        function addToCart(productId) {
-            const product = products.find(p => p.id === productId);
-            if (product && product.usdPrice > 0) {
-                const existingItem = cart.find(item => item.id === productId);
-                if (existingItem) {
-                    existingItem.quantity++;
-                } else {
-                    cart.push({ ...product, quantity: 1 });
-                }
-                saveCartToStorage();
-                updateCartUI();
-                showNotification(`${product.name} ha sido añadido al carrito.`);
-                launchConfetti();
-            } else if (product && product.usdPrice === 0) {
-                showNotification(`${product.name} no está disponible actualmente.`);
-            }
-        }
-
-        function updateCartItemQuantity(productId, change) {
-            const item = cart.find(p => p.id === productId);
-            if (item) {
-                item.quantity += change;
-                if (item.quantity <= 0) {
-                    cart = cart.filter(p => p.id !== productId);
-                }
-                saveCartToStorage();
-                updateCartUI();
-            }
-        }
-        
-        function clearCart() {
-            cart = [];
-            saveCartToStorage();
-            updateCartUI();
-            showNotification('El carrito ha sido vaciado.');
-        }
-
-        function updateCartUI() {
-            const cartItemsList = document.getElementById('cart-items');
-            cartItemsList.innerHTML = '';
-            let totalUSD = 0;
-            let totalItems = 0;
-
-            cart.forEach(item => {
-                const li = document.createElement('li');
-                const subtotalUSD = item.usdPrice * item.quantity;
-                const subtotalBS = (subtotalUSD * dollarRate).toFixed(2);
-                
-                li.innerHTML = `
-                    <div class="cart-item-info">
-                        <span>${item.name} (${item.quantity})</span>
-                        <span class="item-price">$${subtotalUSD.toFixed(2)} (Bs ${subtotalBS})</span>
-                    </div>
-                    <div class="quantity-control">
-                        <button onclick="updateCartItemQuantity(${item.id}, -1)">-</button>
-                        <span>${item.quantity}</span>
-                        <button onclick="updateCartItemQuantity(${item.id}, 1)">+</button>
-                    </div>
-                `;
-                cartItemsList.appendChild(li);
-                totalUSD += subtotalUSD;
-                totalItems += item.quantity;
-            });
-
-            const totalBS = (totalUSD * dollarRate).toFixed(2);
-            document.getElementById('cart-total-usd').innerText = totalUSD.toFixed(2);
-            document.getElementById('cart-total-bs').innerText = totalBS;
-            document.getElementById('cart-count').innerText = totalItems;
-
-            prepareWhatsappLink();
-        }
-
-        function saveCartToStorage() {
-            sessionStorage.setItem('shoppingCart', JSON.stringify(cart));
-        }
-
-        function loadCartFromStorage() {
-            const storedCart = sessionStorage.getItem('shoppingCart');
-            if (storedCart) {
-                cart = JSON.parse(storedCart);
-                updateCartUI();
-            }
-        }
-
-        function showCart() {
-            document.getElementById('cart-modal').style.display = 'block';
-        }
-
-        function closeCart() {
-            document.getElementById('cart-modal').style.display = 'none';
-        }
-
-        function prepareWhatsappLink() {
-            const whatsappButton = document.getElementById('whatsapp-button');
-            if (cart.length > 0) {
-                const message = generateWhatsappMessage();
-                const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-                whatsappButton.href = url;
-            } else {
-                whatsappButton.href = '#';
-            }
-        }
-
-        function generateWhatsappMessage() {
-            let message = '¡Hola! Me gustaría hacer un pedido.\n\n';
-            let totalUSD = 0;
-
-            message += 'Productos:\n';
-            cart.forEach(item => {
-                const subtotalUSD = item.usdPrice * item.quantity;
-                const subtotalBS = (subtotalUSD * dollarRate).toFixed(2);
-                message += `- ${item.name} (${item.quantity}) - $${subtotalUSD.toFixed(2)} / Bs ${subtotalBS}\n`;
-                totalUSD += subtotalUSD;
-            });
-
-            const totalBS = (totalUSD * dollarRate).toFixed(2);
-            message += `\nTotal: $${totalUSD.toFixed(2)} (Bs ${totalBS})`;
-            message += `\n\nPor favor, indícame los pasos para completar la compra.`;
-
-            return message;
-        }
-
-        function closeSplashScreen() {
-            document.getElementById('splash-screen').style.display = 'none';
-        }
-
-        function showNotification(message) {
-            const notification = document.getElementById('notification-message');
-            notification.innerText = message;
-            notification.classList.add('show');
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 3000);
-        }
-
-        function toggleSocialMenu() {
-            const socialMenu = document.getElementById('social-menu');
-            if (socialMenu.style.display === 'block') {
-                socialMenu.style.display = 'none';
-            } else {
-                socialMenu.style.display = 'block';
-            }
-        }
-
-        function closeSocialMenu() {
-            document.getElementById('social-menu').style.display = 'none';
-        }
-
-        function togglePaymentMethods() {
-            const paymentModal = document.getElementById('payment-methods-modal');
-            if (paymentModal.style.display === 'block') {
-                paymentModal.style.display = 'none';
-            } else {
-                paymentModal.style.display = 'block';
-            }
-        }
-
-        function closePaymentMethods() {
-            document.getElementById('payment-methods-modal').style.display = 'none';
-        }
-
-        function launchConfetti() {
-            confetti({
-                particleCount: 100,
-                spread: 70,
-                origin: { y: 0.6 }
-            });
-        }
-        
-        function showProductDetails(productId) {
-            const product = products.find(p => p.id === productId);
-            if (!product) return;
-
-            const modal = document.getElementById('product-details-modal');
-            document.getElementById('details-product-name').innerText = product.name;
-            document.getElementById('details-product-image').src = product.imgUrl;
-            document.getElementById('details-product-description').innerText = product.description;
-            document.getElementById('details-product-price-usd').innerText = product.usdPrice.toFixed(2);
-            document.getElementById('details-product-price-bs').innerText = (product.usdPrice * dollarRate).toFixed(2);
-            
-            modal.style.display = 'block';
-        }
-
-        function closeProductDetails() {
-            document.getElementById('product-details-modal').style.display = 'none';
-        }
     </script>
 </body>
 </html>
