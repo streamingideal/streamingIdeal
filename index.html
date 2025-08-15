@@ -189,6 +189,17 @@
         .social-button:hover {
             background-color: #c0392b;
         }
+
+        /* Nuevos estilos para el botón de métodos de pago */
+        .payment-button {
+            background-color: #9b59b6;
+            color: white;
+            bottom: 140px; /* Posicionado sobre el botón de redes sociales */
+        }
+        .payment-button:hover {
+            background-color: #8e44ad;
+        }
+        
         .fixed-button i {
             margin-right: 8px;
         }
@@ -213,12 +224,14 @@
             border-radius: 10px;
             position: relative;
         }
-        .social-menu-modal .modal-content {
+        .social-menu-modal .modal-content,
+        .payment-methods-modal .modal-content { /* Aplicamos estilos al modal de pagos */
             background-color: #333;
             color: white;
             text-align: center;
         }
-        .social-menu-modal h2 {
+        .social-menu-modal h2,
+        .payment-methods-modal h2 {
             margin-top: 0;
         }
         .social-link {
@@ -359,6 +372,34 @@
             opacity: 1;
             visibility: visible;
         }
+
+        /* Estilos específicos para la nueva sección de métodos de pago */
+        .payment-methods-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .payment-method-card {
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+        .payment-method-card:hover {
+            transform: scale(1.05);
+        }
+        .payment-method-card i {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        .payment-method-card p {
+            margin: 0;
+            font-size: 0.9em;
+        }
     </style>
 </head>
 <body>
@@ -380,6 +421,9 @@
         </button>
         <button class="fixed-button social-button" onclick="toggleSocialMenu()">
             <i class="fas fa-share-alt"></i> Redes
+        </button>
+        <button class="fixed-button payment-button" onclick="togglePaymentMethods()">
+            <i class="fas fa-wallet"></i> Pagos
         </button>
     </header>
 
@@ -519,6 +563,33 @@
         </div>
     </div>
 
+    <div id="payment-methods-modal" class="modal payment-methods-modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closePaymentMethods()">&times;</span>
+            <h2>Métodos de Pago</h2>
+            <div class="payment-methods-container">
+                <div class="payment-method-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <p>Pago Móvil</p>
+                </div>
+                <div class="payment-method-card">
+                    <i class="fab fa-paypal"></i>
+                    <p>PayPal</p>
+                </div>
+                <div class="payment-method-card">
+                    <i class="fas fa-coins"></i> <p>Binance</p>
+                </div>
+                <div class="payment-method-card">
+                    <i class="fas fa-wallet"></i>
+                    <p>Wally</p>
+                </div>
+                <div class="payment-method-card">
+                    <i class="fas fa-credit-card"></i> <p>Zinli</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         // *** AQUÍ es donde debes cambiar la tasa del dólar manualmente ***
         let dollarRate = 135.64; // Tasa actual
@@ -552,6 +623,12 @@
             document.getElementById('social-menu').addEventListener('click', (e) => {
                 if (e.target.id === 'social-menu') {
                     closeSocialMenu();
+                }
+            });
+            // Nuevo evento para cerrar el modal de pagos
+            document.getElementById('payment-methods-modal').addEventListener('click', (e) => {
+                if (e.target.id === 'payment-methods-modal') {
+                    closePaymentMethods();
                 }
             });
         });
@@ -729,6 +806,20 @@
 
         function closeSocialMenu() {
             document.getElementById('social-menu').style.display = 'none';
+        }
+
+        // Nuevas funciones para la sección de métodos de pago
+        function togglePaymentMethods() {
+            const paymentModal = document.getElementById('payment-methods-modal');
+            if (paymentModal.style.display === 'block') {
+                paymentModal.style.display = 'none';
+            } else {
+                paymentModal.style.display = 'block';
+            }
+        }
+
+        function closePaymentMethods() {
+            document.getElementById('payment-methods-modal').style.display = 'none';
         }
     </script>
 </body>
