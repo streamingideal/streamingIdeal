@@ -894,9 +894,49 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const dollarRate = 135.64;
-            document.getElementById('dollar-rate-display').innerText = dollarRate.toFixed(2);
+            // --- INICIO DEL CÓDIGO MODIFICADO ---
+            // Se inicializa la tasa en 0, se actualizará con la solicitud a la URL
+            let dollarRate = 0; 
             
+            const tasaUrl = 'https://streamingideal.github.io/tasabcv/';
+
+            // Función para obtener la tasa del dólar desde la URL
+            const fetchDollarRate = async () => {
+                try {
+                    const response = await fetch(tasaUrl);
+                    const htmlText = await response.text();
+                    
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(htmlText, 'text/html');
+                    
+                    // Asegúrate de que este ID sea el que contiene la tasa en tu página
+                    const rateElement = doc.getElementById('tasa-bcv-valor');
+                    
+                    if (rateElement) {
+                        const rate = parseFloat(rateElement.innerText.replace(',', '.'));
+                        if (!isNaN(rate)) {
+                            dollarRate = rate;
+                            document.getElementById('dollar-rate-display').innerText = dollarRate.toFixed(2);
+                            updatePrices(); // Llama a la función para actualizar todos los precios
+                        } else {
+                            console.error('El valor de la tasa no es un número válido.');
+                            document.getElementById('dollar-rate-display').innerText = 'Error al cargar';
+                        }
+                    } else {
+                        console.error('No se encontró el elemento con el ID "tasa-bcv-valor".');
+                        document.getElementById('dollar-rate-display').innerText = 'No disponible';
+                    }
+                } catch (error) {
+                    console.error('Error al obtener la tasa del dólar:', error);
+                    document.getElementById('dollar-rate-display').innerText = 'Error de conexión';
+                }
+            };
+            
+            // Llamar a la función para cargar la tasa al inicio
+            fetchDollarRate();
+
+            // --- FIN DEL CÓDIGO MODIFICADO ---
+
             let cart = [];
             const whatsappNumber = '584129386149';
             const products = [
@@ -1246,8 +1286,7 @@
             window.changeSlide = changeSlide;
             window.showSynopsis = showSynopsis;
             window.closeSynopsis = closeSynopsis;
-
-            updatePrices();
+            
             loadCartFromStorage();
 
             document.getElementById('close-cart-modal').addEventListener('click', closeCart);
