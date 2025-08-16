@@ -106,6 +106,35 @@
             color: #888;
             font-size: 1.2em;
         }
+        
+        .search-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            z-index: 10;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .search-suggestions li {
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .search-suggestions li:hover {
+            background-color: #f0f0f0;
+        }
+
 
         /* Contenedor principal */
         .main-content {
@@ -658,8 +687,9 @@
     </header>
 
     <div class="search-bar">
-        <input type="text" id="search-input" placeholder="Buscar productos..." onkeyup="filterProducts()">
+        <input type="text" id="search-input" placeholder="Buscar productos..." onkeyup="filterProducts(event)">
         <i class="fas fa-search search-icon"></i>
+        <ul class="search-suggestions" id="search-suggestions"></ul>
     </div>
 
     <main class="main-content">
@@ -765,16 +795,21 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             let dollarRate = 0; 
-            let products = []; // Aquí se cargarán los productos desde el archivo JSON
+            let products = [];
             const whatsappNumber = '584129386149';
             let cart = [];
 
-            const tasaUrl = 'https://nexuswebcode.github.io/tasabcv/';
             let currentSlide = 0;
             const tmdbApiKey = '65aa5b7946592f4674d9d2115569d584';
 
+            const searchInput = document.getElementById('search-input');
+            const searchSuggestionsList = document.getElementById('search-suggestions');
+            const SEARCH_HISTORY_KEY = 'searchHistory';
+
             const fetchDollarRate = async () => {
                 try {
+                    const version = new Date().getTime(); 
+                    const tasaUrl = `https://nexuswebcode.github.io/tasabcv/?v=${version}`; 
                     const response = await fetch(tasaUrl);
                     const htmlText = await response.text();
                     const parser = new DOMParser();
@@ -802,10 +837,8 @@
 
             const fetchProducts = async () => {
                 try {
-                    // --- MODIFICACIÓN CLAVE PARA EVITAR LA CACHÉ ---
                     const version = new Date().getTime(); 
                     const response = await fetch(`data/productos.json?v=${version}`); 
-                    // ---------------------------------------------
                     if (!response.ok) {
                         throw new Error(`Error al cargar productos: ${response.status}`);
                     }
@@ -854,11 +887,24 @@
                 updateCartUI();
             };
 
-            const filterProducts = () => {
-                const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const filterProducts = (event) => {
+                const searchTerm = searchInput.value.toLowerCase();
                 const productElements = document.querySelectorAll('.product');
                 const exchangeRateInfo = document.querySelector('.exchange-rate-info');
                 
+                if (event.key === 'Enter' && searchTerm.trim() !== '') {
+                    saveSearchTerm(searchTerm.trim());
+                    searchSuggestionsList.style.display = 'none';
+                }
+
+                if (searchTerm.length > 0) {
+                    exchangeRateInfo.style.display = 'none';
+                    showSuggestions(searchTerm);
+                } else {
+                    exchangeRateInfo.style.display = 'block';
+                    searchSuggestionsList.style.display = 'none';
+                }
+
                 productElements.forEach(productEl => {
                     const productName = productEl.getAttribute('data-product-name').toLowerCase();
                     if (productName.includes(searchTerm)) {
@@ -867,10 +913,37 @@
                         productEl.style.display = 'none';
                     }
                 });
-                if (searchTerm.length > 0) {
-                    exchangeRateInfo.style.display = 'none';
+            };
+
+            const saveSearchTerm = (term) => {
+                let history = JSON.parse(localStorage.getItem(SEARCH_HISTORY_KEY)) || [];
+                // Evita duplicados
+                history = history.filter(item => item !== term);
+                // Limita el historial a 5 búsquedas
+                history.unshift(term);
+                if (history.length > 5) {
+                    history.pop();
+                }
+                localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(history));
+            };
+
+            const showSuggestions = (term) => {
+                const history = JSON.parse(localStorage.getItem(SEARCH_HISTORY_KEY)) || [];
+                searchSuggestionsList.innerHTML = '';
+                const filteredHistory = history.filter(item => item.includes(term));
+                if (filteredHistory.length > 0) {
+                    filteredHistory.forEach(item => {
+                        const li = document.createElement('li');
+                        li.innerText = item;
+                        li.onclick = () => {
+                            searchInput.value = item;
+                            filterProducts({ key: 'Enter' });
+                        };
+                        searchSuggestionsList.appendChild(li);
+                    });
+                    searchSuggestionsList.style.display = 'block';
                 } else {
-                    exchangeRateInfo.style.display = 'block';
+                    searchSuggestionsList.style.display = 'none';
                 }
             };
 
