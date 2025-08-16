@@ -802,7 +802,10 @@
 
             const fetchProducts = async () => {
                 try {
-                    const response = await fetch('data/productos.json');
+                    // --- MODIFICACIÓN CLAVE PARA EVITAR LA CACHÉ ---
+                    const version = new Date().getTime(); 
+                    const response = await fetch(`data/productos.json?v=${version}`); 
+                    // ---------------------------------------------
                     if (!response.ok) {
                         throw new Error(`Error al cargar productos: ${response.status}`);
                     }
