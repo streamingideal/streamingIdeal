@@ -2,7 +2,7 @@
     {
         "id": 1,
         "name": "Netflix",
-        "usdPrice": 4,
+        "usdPrice": 3.5,
         "imgUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Netflix_icon.svg/1024px-Netflix_icon.svg.png",
         "description": "(Precios x 30 dias)",
         "stock": true,
