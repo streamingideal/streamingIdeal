@@ -5,7 +5,7 @@
         "usdPrice": 3.99,
         "imgUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Netflix_icon.svg/1024px-Netflix_icon.svg.png",
         "description": "(Precios x 30 dias)",
-        "stock": true,
+        "stock": false,
         "suggestions": [
             { "id": 987686, "title": "Asunto familiar", "imageUrl": "https://pics.filmaffinity.com/a_family_affair-639912317-large.jpg" },
             { "id": 229221, "title": "Mi querida niña", "imageUrl": "https://image.tmdb.org/t/p/original/dmyJoPy8iiwDKy683EjRTSiARlg.jpg" },
