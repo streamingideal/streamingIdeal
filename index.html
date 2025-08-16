@@ -274,6 +274,9 @@
             opacity: 0;
             visibility: hidden;
         }
+        .fixed-button.invisible {
+            display: none;
+        }
 
         /* Modales */
         .modal {
@@ -652,9 +655,6 @@
         <a href="#" class="fixed-button payment-button" id="payment-button" onclick="togglePaymentMethods()">
             <i class="fas fa-wallet"></i> Pagos
         </a>
-        <a href="#" class="fixed-button movies-button" id="movies-button" onclick="showMoviesCatalog()">
-            <i class="fas fa-film"></i> Qué ver
-        </a>
     </header>
 
     <div class="search-bar">
@@ -676,7 +676,7 @@
                 <p class="price-bs">Bs <span id="price-bs-1">0.00</span></p>
                 <div class="product-buttons">
                     <button class="add-to-cart-button" onclick="addToCart(1)">Añadir al carrito</button>
-                    <button class="view-details-button" onclick="showProductDetails(1)">Ver más</button>
+                    <button class="view-details-button" onclick="showSuggestionsModal('Netflix')">Sugerencias</button>
                 </div>
             </div>
 
@@ -688,7 +688,7 @@
                 <p class="price-bs">Bs <span id="price-bs-2">0.00</span></p>
                 <div class="product-buttons">
                     <button class="add-to-cart-button" onclick="addToCart(2)">Añadir al carrito</button>
-                    <button class="view-details-button" onclick="showProductDetails(2)">Ver más</button>
+                    <button class="view-details-button" onclick="showSuggestionsModal('Disney Plus')">Sugerencias</button>
                 </div>
             </div>
 
@@ -700,7 +700,7 @@
                 <p class="price-bs">Bs <span id="price-bs-3">0.00</span></p>
                 <div class="product-buttons">
                     <button class="add-to-cart-button" onclick="addToCart(3)">Añadir al carrito</button>
-                    <button class="view-details-button" onclick="showProductDetails(3)">Ver más</button>
+                    <button class="view-details-button" onclick="showSuggestionsModal('Max')">Sugerencias</button>
                 </div>
             </div>
 
@@ -712,7 +712,7 @@
                 <p class="price-bs">Bs <span id="price-bs-4">0.00</span></p>
                 <div class="product-buttons">
                     <button class="add-to-cart-button" onclick="addToCart(4)">Añadir al carrito</button>
-                    <button class="view-details-button" onclick="showProductDetails(4)">Ver más</button>
+                    <button class="view-details-button" onclick="showSuggestionsModal('Prime Video')">Sugerencias</button>
                 </div>
             </div>
 
@@ -724,7 +724,7 @@
                 <p class="price-bs">Bs <span id="price-bs-5">0.00</span></p>
                 <div class="product-buttons">
                     <button class="add-to-cart-button" onclick="addToCart(5)">Añadir al carrito</button>
-                    <button class="view-details-button" onclick="showProductDetails(5)">Ver más</button>
+                    <button class="view-details-button" onclick="showSuggestionsModal('Paramount Plus')">Sugerencias</button>
                 </div>
             </div>
 
@@ -736,7 +736,7 @@
                 <p class="price-bs">Bs <span id="price-bs-6">0.00</span></p>
                 <div class="product-buttons">
                     <button class="add-to-cart-button" onclick="addToCart(6)" disabled>Añadir al carrito</button>
-                    <button class="view-details-button" onclick="showProductDetails(6)">Ver más</button>
+                    <button class="view-details-button" onclick="showSuggestionsModal('Flujo TV')">Sugerencias</button>
                 </div>
             </div>
 
@@ -748,7 +748,7 @@
                 <p class="price-bs">Bs <span id="price-bs-7">0.00</span></p>
                 <div class="product-buttons">
                     <button class="add-to-cart-button" onclick="addToCart(7)">Añadir al carrito</button>
-                    <button class="view-details-button" onclick="showProductDetails(7)">Ver más</button>
+                    <button class="view-details-button" onclick="showSuggestionsModal('Crunchyroll')">Sugerencias</button>
                 </div>
             </div>
 
@@ -760,7 +760,7 @@
                 <p class="price-bs">Bs <span id="price-bs-8">0.00</span></p>
                 <div class="product-buttons">
                     <button class="add-to-cart-button" onclick="addToCart(8)">Añadir al carrito</button>
-                    <button class="view-details-button" onclick="showProductDetails(8)">Ver más</button>
+                    <button class="view-details-button" onclick="showSuggestionsModal('Vix')">Sugerencias</button>
                 </div>
             </div>
 
@@ -772,7 +772,7 @@
                 <p class="price-bs">Bs <span id="price-bs-9">0.00</span></p>
                 <div class="product-buttons">
                     <button class="add-to-cart-button" onclick="addToCart(9)">Añadir al carrito</button>
-                    <button class="view-details-button" onclick="showProductDetails(9)">Ver más</button>
+                    <button class="view-details-button" onclick="showSuggestionsModal('Spotify')">Sugerencias</button>
                 </div>
             </div>
 
@@ -784,7 +784,7 @@
                 <p class="price-bs">Bs <span id="price-bs-10">0.00</span></p>
                 <div class="product-buttons">
                     <button class="add-to-cart-button" onclick="addToCart(10)" disabled>Añadir al carrito</button>
-                    <button class="view-details-button" onclick="showProductDetails(10)">Ver más</button>
+                    <button class="view-details-button" onclick="showSuggestionsModal('Canva')">Sugerencias</button>
                 </div>
             </div>
         </section>
@@ -794,6 +794,9 @@
         <p>2025 - Streaming Ideal &copy;</p>
         <p>Developed by: Nexus Web Code &copy;</p>
         <p>Todos los derechos reservados.</p>
+        <a href="#" class="fixed-button movies-button invisible" id="movies-button" onclick="showMoviesCatalog()">
+            <i class="fas fa-film"></i> Qué ver
+        </a>
     </footer>
 
     <div id="cart-modal" class="modal">
@@ -854,27 +857,14 @@
             </div>
         </div>
     </div>
-    
-    <div id="product-details-modal" class="modal product-details-modal">
-        <div class="modal-content">
-            <span class="close-button" onclick="closeProductDetails()">&times;</span>
-            <div id="product-details-content">
-                <h2 id="details-product-name"></h2>
-                <img id="details-product-image" src="" alt="Imagen del producto">
-                <p id="details-product-description"></p>
-                <p class="price">$<span id="details-product-price-usd"></span></p>
-                <p class="price-bs">Bs <span id="details-product-price-bs"></span></p>
-            </div>
-        </div>
-    </div>
 
-    <div id="movies-catalog-modal" class="modal">
+    <div id="suggestions-modal" class="modal">
         <div class="modal-content movies-catalog-content">
-            <span class="close-button" onclick="closeMoviesCatalog()">&times;</span>
-            <h2>Qué ver:</h2>
+            <span class="close-button" onclick="closeSuggestionsModal()">&times;</span>
+            <h2 id="suggestions-title">Sugerencias</h2>
             <div class="carousel-container">
                 <button class="carousel-nav prev" onclick="changeSlide(-1)">&#10094;</button>
-                <div class="carousel-slides" id="carousel-slides">
+                <div class="carousel-slides" id="suggestions-carousel-slides">
                 </div>
                 <button class="carousel-nav next" onclick="changeSlide(1)">&#10095;</button>
             </div>
@@ -897,7 +887,7 @@
             // --- INICIO DEL CÓDIGO MODIFICADO ---
             // Se inicializa la tasa en 0, se actualizará con la solicitud a la URL
             let dollarRate = 0; 
-            
+
             const tasaUrl = 'https://nexuswebcode.github.io/tasabcv/';
 
             // Función para obtener la tasa del dólar desde la URL
@@ -905,13 +895,13 @@
                 try {
                     const response = await fetch(tasaUrl);
                     const htmlText = await response.text();
-                    
+
                     const parser = new DOMParser();
                     const doc = parser.parseFromString(htmlText, 'text/html');
-                    
+
                     // Asegúrate de que este ID sea el que contiene la tasa en tu página
                     const rateElement = doc.getElementById('tasa-bcv-valor');
-                    
+
                     if (rateElement) {
                         const rate = parseFloat(rateElement.innerText.replace(',', '.'));
                         if (!isNaN(rate)) {
@@ -931,7 +921,7 @@
                     document.getElementById('dollar-rate-display').innerText = 'Error de conexión';
                 }
             };
-            
+
             // Llamar a la función para cargar la tasa al inicio
             fetchDollarRate();
 
@@ -952,14 +942,57 @@
                 { id: 10, name: 'Canva', usdPrice: 0, imgUrl: 'https://www.pngmart.com/files/23/Canva-Logo-PNG-File.png', description: 'La herramienta de diseño gráfico en línea más popular. Crea presentaciones, logos, pósteres y más de manera sencilla. (Actualmente sin stock)' }
             ];
 
-            const movies = [
-                { id: 987686, title: 'Asunto familiar', imageUrl: 'https://pics.filmaffinity.com/a_family_affair-639912317-large.jpg' },
-                { id: 229221, title: 'Mi querida niña', imageUrl: 'https://image.tmdb.org/t/p/original/dmyJoPy8iiwDKy683EjRTSiARlg.jpg' },
-                { id: 426063, title: 'Nosferatu', imageUrl: 'https://m.media-amazon.com/images/M/MV5BY2FhZGE3NmEtNWJjOC00NDI1LWFhMTQtMjcxNmQzZmEwNGIzXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg' },
-                { id: 1104845, title: 'Plankton: La pelicula', imageUrl: 'https://i.imgur.com/H4ghC9b.jpeg' },
-                { id: 259909, title: 'Dexter: Resurrecion', imageUrl: 'https://mx.web.img2.acsta.net/img/57/32/5732710262114079561f9a68c9c48f12.jpg' }
-            ];
-            
+            const suggestions = {
+                'Netflix': [
+                    { id: 987686, title: 'Asunto familiar', imageUrl: 'https://pics.filmaffinity.com/a_family_affair-639912317-large.jpg' },
+                    { id: 229221, title: 'Mi querida niña', imageUrl: 'https://image.tmdb.org/t/p/original/dmyJoPy8iiwDKy683EjRTSiARlg.jpg' },
+                    { id: 426063, title: 'Nosferatu', imageUrl: 'https://m.media-amazon.com/images/M/MV5BY2FhZGE3NmEtNWJjOC00NDI1LWFhMTQtMjcxNmQzZmEwNGIzXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg' },
+                    { id: 1104845, title: 'Plankton: La pelicula', imageUrl: 'https://i.imgur.com/H4ghC9b.jpeg' }
+                ],
+                'Disney Plus': [
+                    { id: 1022796, title: 'Deadpool & Wolverine', imageUrl: 'https://static.wikia.nocookie.net/marvelcinematicuniverse/images/1/1c/Deadpool_%26_Wolverine_-_P%C3%B3ster_final.png/revision/latest?cb=20240520182653&path-prefix=es' },
+                    { id: 1025537, title: 'Intensamente 2', imageUrl: 'https://static.wikia.nocookie.net/doblaje/images/4/4b/Intensa_Mente_2_%282024%29_Nuevo_Poster.jpg/revision/latest/scale-to-width-down/1200?cb=20241029033211&path-prefix=es' },
+                    { id: 260513, title: 'Los Increíbles 2', imageUrl: 'https://static.wikia.nocookie.net/disney/images/3/36/Incredibles_2_poster_.jpg/revision/latest?cb=20180413025917&path-prefix=es' },
+                    { id: 299534, title: 'Vengadores: Endgame', imageUrl: 'https://static.wikia.nocookie.net/marvelcinematicuniverse/images/9/9b/Avenger_Endgame_Poster_Oficial.png/revision/latest?cb=20190326185910&path-prefix=es' }
+                ],
+                'Max': [
+                    { id: 238, title: 'El Padrino', imageUrl: 'https://static.wikia.nocookie.net/doblaje/images/9/9a/Elpadrino.jpg/revision/latest?cb=20211023042804&path-prefix=es' },
+                    { id: 111, title: 'El Señor de los Anillos: El Retorno del Rey', imageUrl: 'https://static.wikia.nocookie.net/doblaje/images/7/76/SDARRCartelLatino.png/revision/latest?cb=20161106044027&path-prefix=es' },
+                    { id: 12445, title: 'Harry Potter: Las reliquias de la muerte parte 2 ', imageUrl: 'https://i.pinimg.com/736x/0e/65/c1/0e65c12f8ea1ed48efcfd5ac3d842945.jpg' },
+                    { id: 259909, title: 'Dexter: Resurrecion', imageUrl: 'https://mx.web.img2.acsta.net/img/57/32/5732710262114079561f9a68c9c48f12.jpg' }
+                ],
+                'Prime Video': [
+                    { id: 843527, title: 'La idea de ti', imageUrl: 'https://m.media-amazon.com/images/M/MV5BY2RkZmZjYTQtOGExMS00YTljLWJmNzQtMzI0ZDU3YzFjNzJkXkEyXkFqcGc@._V1_.jpg' },
+                    { id: 872585, title: 'Oppenheimer', imageUrl: 'https://m.media-amazon.com/images/M/MV5BNTFlZDI1YWQtMTVjNy00YWU1LTg2YjktMTlhYmRiYzQ3NTVhXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg' },
+                    { id: 76479, title: 'The boys', imageUrl: 'https://m.media-amazon.com/images/M/MV5BMWJlN2U5MzItNjU4My00NTM2LWFjOWUtOWFiNjg3ZTMxZDY1XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg' },
+                    { id: 157336, title: 'Interestelar', imageUrl: 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/0a9bf821-8d7e-4b20-9eff-0b6464b508bf/d6ibj30-19eba9f7-57ca-4397-bf83-822c1c4f4f5f.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwic3ViIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsImF1ZCI6WyJ1cm46c2VydmljZTpmaWxlLmRvd25sb2FkIl0sIm9iaiI6W1t7InBhdGgiOiIvZi8wYTliZjgyMS04ZDdlLTRiMjAtOWVmZi0wYjY0NjRiNTA4YmYvZDZpYmozMC0xOWViYTlmNy01N2NhLTQzOTctYmY4My04MjJjMWM0ZjRmNWYuanBnIn1dXX0.BQwF0tIFz9Flgr0xn6LA0EW0Y29PpJ5ZgE6BpcgQVio' }
+                ],
+                'Paramount Plus': [
+                    { id: 27205, title: 'Inception', imageUrl: 'https://m.media-amazon.com/images/M/MV5BMTM0MjUzNjkwMl5BMl5BanBnXkFtZTcwNjY0OTk1Mw@@._V1_.jpg' },
+                    { id: 131635, title: 'Los Juegos del Hambre', imageUrl: 'https://m.media-amazon.com/images/M/MV5BZTBmOGU0MDctMTgyNS00ZDFkLWFlOTItOTI3OWYzNTU3MjBmXkEyXkFqcGc@._V1_.jpg' },
+                    { id: 118, title: 'Titanic', imageUrl: 'https://es.web.img3.acsta.net/medias/nmedia/18/86/91/41/19870073.jpg' },
+                    { id: 13, title: 'Forrest Gump', imageUrl: 'https://m.media-amazon.com/images/M/MV5BNDYwNzVjMTItZmU5YS00YjQ5LTljYjgtMjY2NDVmYWMyNWFmXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg' }
+                ],
+                'Flujo TV': [
+                    { id: 694, title: 'El Resplandor', imageUrl: 'https://m.media-amazon.com/images/M/MV5BYmUxZDU3NjktMzA1OS00OGUwLWJkOTctYzhjOGI5MTcyY2U3XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg' },
+                    { id: 550, title: 'El Club de la Pelea', imageUrl: 'https://m.media-amazon.com/images/M/MV5BOTgyOGQ1NDItNGU3Ny00MjU3LTg2YWEtNmEyYjBiMjI1Y2M5XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg' },
+                    { id: 274, title: 'El Silencio de los Corderos', imageUrl: 'https://m.media-amazon.com/images/M/MV5BOGZiZjYxY2UtNDE5YS00NzcwLWI0NmItNjcwYThkOWMwYTdhXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg' },
+                    { id: 539, title: 'Psicosis', imageUrl: 'https://m.media-amazon.com/images/M/MV5BOGMzMmMyZjQtYTI4YS00ZDIxLWIyYjgtYWVlYzk2MWE5MjJlXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg' }
+                ],
+                'Crunchyroll': [
+                    { id: 129, title: 'El Viaje de Chihiro', imageUrl: 'https://image.tmdb.org/t/p/original/laXrmaTRuroArSPfsGlvTbeWxVA.jpg' },
+                    { id: 149, title: 'Akira', imageUrl: 'https://image.tmdb.org/t/p/original/vjPt8HYymLOkRv82x9JwVO7M2a5.jpg' },
+                    { id: 372058, title: 'Your Name', imageUrl: 'https://image.tmdb.org/t/p/original/iaiy3tg9QVkDpObm1IGqmbC9A5C.jpg' },
+                    { id: 1311031, title: 'Guardianes de la Noche: Kimetsu no Yaiba', imageUrl: 'https://image.tmdb.org/t/p/original/6N21gcFbhT4ocdTU4MGREAaM5Vz.jpg' }
+                ],
+                'Vix': [
+                    { id: 670864, title: 'La Bamba', imageUrl: 'https://image.tmdb.org/t/p/original/fiByqrT5qqkEZKUWUdomgABPa4x.jpg' },
+                    { id: 1391, title: 'Y tu mamá también', imageUrl: 'https://image.tmdb.org/t/p/original/izw41PkE8y891yraO6fN1tCNmOG.jpg' },
+                    { id: 211954, title: 'No se aceptan devoluciones', imageUrl: 'https://image.tmdb.org/t/p/original/5h4UApKNe62K8hoUCc151kQ56Uc.jpg' },
+                    { id: 833971, title: 'La Casa de las Flores', imageUrl: 'https://image.tmdb.org/t/p/original/taSkrxVRwilWCdQqbwDwsqqa80t.jpg' }
+                ],                
+            };
+
             let currentSlide = 0;
             const tmdbApiKey = '65aa5b7946592f4674d9d2115569d584';
 
@@ -1005,7 +1038,7 @@
                     exchangeRateInfo.style.display = 'block';
                 }
             };
-            
+
             const addToCart = (productId) => {
                 const product = products.find(p => p.id === productId);
                 if (product && product.usdPrice > 0) {
@@ -1062,7 +1095,7 @@
                         const li = document.createElement('li');
                         const subtotalUSD = item.usdPrice * item.quantity;
                         const subtotalBS = (subtotalUSD * dollarRate).toFixed(2);
-                        
+
                         li.innerHTML = `
                             <div class="cart-item-info">
                                 <span>${item.name} (${item.quantity})</span>
@@ -1173,8 +1206,7 @@
                     origin: { y: 0.6 }
                 });
             };
-            
-            // Función para mostrar los detalles del producto y ocultar los botones flotantes
+
             const showProductDetails = (productId) => {
                 const product = products.find(p => p.id === productId);
                 if (!product) return;
@@ -1185,32 +1217,38 @@
                 document.getElementById('details-product-price-usd').innerText = product.usdPrice.toFixed(2);
                 document.getElementById('details-product-price-bs').innerText = (product.usdPrice * dollarRate).toFixed(2);
                 modal.style.display = 'block';
-                toggleFixedButtons(false); // Oculta los botones flotantes
+                toggleFixedButtons(false); 
             };
 
-            // Función para cerrar los detalles del producto y mostrar los botones flotantes
             const closeProductDetails = () => {
                 document.getElementById('product-details-modal').style.display = 'none';
-                toggleFixedButtons(true); // Muestra los botones flotantes
+                toggleFixedButtons(true); 
+            };
+            
+            const showSuggestionsModal = (serviceName) => {
+                const modal = document.getElementById('suggestions-modal');
+                const title = document.getElementById('suggestions-title');
+                const carousel = document.getElementById('suggestions-carousel-slides');
+
+                title.innerText = `Sugerencias para ${serviceName}`;
+                
+                const selectedMovies = suggestions[serviceName] || [];
+                renderSuggestionsSlides(selectedMovies);
+                
+                modal.style.display = 'block';
+                toggleFixedButtons(false);
             };
 
-            const showMoviesCatalog = () => {
-                toggleFixedButtons(false); // Oculta los botones
-                document.getElementById('movies-catalog-modal').style.display = 'block';
-                renderMovieSlides();
-            };
-
-            const closeMoviesCatalog = () => {
-                toggleFixedButtons(true); // Muestra los botones
-                document.getElementById('movies-catalog-modal').style.display = 'none';
+            const closeSuggestionsModal = () => {
+                document.getElementById('suggestions-modal').style.display = 'none';
+                toggleFixedButtons(true);
                 currentSlide = 0;
-                document.getElementById('carousel-slides').style.transform = `translateX(0%)`;
             };
 
-            const renderMovieSlides = () => {
-                const carouselContainer = document.getElementById('carousel-slides');
+            const renderSuggestionsSlides = (movieList) => {
+                const carouselContainer = document.getElementById('suggestions-carousel-slides');
                 carouselContainer.innerHTML = '';
-                movies.forEach(movie => {
+                movieList.forEach(movie => {
                     const slide = document.createElement('div');
                     slide.classList.add('carousel-slide');
                     slide.innerHTML = `
@@ -1224,9 +1262,9 @@
             };
 
             const changeSlide = (direction) => {
-                const slides = document.querySelectorAll('.carousel-slide');
+                const slides = document.querySelectorAll('#suggestions-carousel-slides .carousel-slide');
                 currentSlide = (currentSlide + direction + slides.length) % slides.length;
-                document.getElementById('carousel-slides').style.transform = `translateX(-${currentSlide * 100}%)`;
+                document.getElementById('suggestions-carousel-slides').style.transform = `translateX(-${currentSlide * 100}%)`;
             };
 
             const showSynopsis = async (movieId, movieTitle) => {
@@ -1267,6 +1305,10 @@
                 document.getElementById('synopsis-modal').style.display = 'none';
             };
 
+            const showMoviesCatalog = () => {
+                // Función no funcional para el usuario
+            };
+
             // Exponer funciones al ámbito global para los eventos onclick en HTML
             window.closeSplashScreen = closeSplashScreen;
             window.showCart = showCart;
@@ -1281,12 +1323,13 @@
             window.filterProducts = filterProducts;
             window.showProductDetails = showProductDetails;
             window.closeProductDetails = closeProductDetails;
-            window.showMoviesCatalog = showMoviesCatalog;
-            window.closeMoviesCatalog = closeMoviesCatalog;
+            window.showSuggestionsModal = showSuggestionsModal;
+            window.closeSuggestionsModal = closeSuggestionsModal;
             window.changeSlide = changeSlide;
             window.showSynopsis = showSynopsis;
             window.closeSynopsis = closeSynopsis;
-            
+            window.showMoviesCatalog = showMoviesCatalog;
+
             loadCartFromStorage();
 
             document.getElementById('close-cart-modal').addEventListener('click', closeCart);
@@ -1310,9 +1353,9 @@
                     closeProductDetails();
                 }
             });
-            document.getElementById('movies-catalog-modal').addEventListener('click', (e) => {
-                if (e.target.id === 'movies-catalog-modal') {
-                    closeMoviesCatalog();
+            document.getElementById('suggestions-modal').addEventListener('click', (e) => {
+                if (e.target.id === 'suggestions-modal') {
+                    closeSuggestionsModal();
                 }
             });
             document.getElementById('synopsis-modal').addEventListener('click', (e) => {
